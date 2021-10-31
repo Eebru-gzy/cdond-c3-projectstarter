@@ -124,9 +124,9 @@ jobs:
       - run:  
           name: Scan front-end
           command: |
-            cd frontend
+            cd frontend-jsgjh
             npm i
-            npm audit fix --audit-level=cri.tical --force
+            npm audit fix --audit-level=critical-kjsgi
       # Your job code here
 
   scan-backend:
@@ -142,9 +142,9 @@ jobs:
       - run:  
           name: Scan back-end
           command: |
-            cd backend
+            cd backend-ksugyug
             npm i
-            npm audit fix --audit-level=criti.cal --force
+            npm audit fix --audit-level=critical-kjsdi
       # Your job code here
       - save_cache:
           paths: [backend/node_modules]
