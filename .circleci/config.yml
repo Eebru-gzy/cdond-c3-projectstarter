@@ -13,7 +13,7 @@ commands:
           when: on_fail
           command: |
               input=<<parameters.to>>
-              if [ $input == s3f ]   
+              if [ $input == FE ]   
               then
                 aws s3 rm s3://udapeople-bit1212 --recursive
                 aws cloudformation delete-stack \
@@ -261,27 +261,36 @@ jobs:
               fi
       - revert-migrations
 
-#   deploy-frontend:
-#     docker:
-#       # Docker image here that supports AWS CLI
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Get backend url
-#           command: |
-#             # your code here
-#             export API_URL="http://${BACKEND_IP}:3030"
-#             echo "${API_URL}"
-#       - run:
-#           name: Deploy frontend objects
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure      
-                    
+  # deploy-frontend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #     # Docker image here that supports AWS CLI
+  #   steps:
+  #     # Checkout code from git
+  #     - checkout
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #             sudo apt-get update && sudo apt-get install -yy less
+  #             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  #             unzip awscliv2.zip
+  #             sudo ./aws/install
+                  
+  #     - run:
+  #         name: Deploy frontend objects 
+  #         command: |
+  #             URL=$(curl -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request GET https://api.memstash.io/values/backend)
+  #             export API_URL="http://${URL}:3030" 
+  #             curl -H "Content-Type: text/plain" -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request PUT --data ${API_URL} https://api.memstash.io/values/backendurl    
+  #             cd frontend
+  #             echo NODE_ENV=production >> ".env"
+  #             echo API_URL=$API_URL >> ".env"
+  #             npx browserslist@latest --update-db
+  #             npm install
+  #             npm run build
+  #             aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID}/ --recursive 
+  #     - destroy-environment:
+  #         to: "FE"
 #   deploy-backend:
 #     docker:
 #       # Docker image here that supports Ansible
