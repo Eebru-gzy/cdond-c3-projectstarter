@@ -1,1 +1,2 @@
-Github repo URL: https://github.com/Eebru-gzy/cdond-c3-projectstarter
+[URL-1] Github repo URL: https://github.com/Eebru-gzy/cdond-c3-projectstarter
+[URL-2] FE deployment: 
