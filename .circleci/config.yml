@@ -231,7 +231,7 @@ jobs:
       - run:
           name: Cat inventory
           command: |
-            cd .circle/ansible/
+            cd .circleci/ansible/
             cat inventory.txt
       - run:
           name: Configure server
