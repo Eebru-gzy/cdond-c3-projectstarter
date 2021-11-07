@@ -257,6 +257,9 @@ jobs:
             rm -f package-lock.json
             rm -rf node_modules
             npm install
+      - run: 
+          name: Run Migration
+          command: |
             npm run migrations >> db_success.txt      
       - run:
           name: Send migration results to memstash
@@ -377,16 +380,16 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
       # - deploy-infrastructure:
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
@@ -394,8 +397,8 @@ workflows:
       #         only: [master]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [scan-frontend, scan-backend]
+      - run-migrations
+          # requires: [scan-frontend, scan-backend]
       - deploy-frontend:
           requires: [run-migrations]
       # - deploy-backend:
