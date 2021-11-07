@@ -199,6 +199,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udacity-backend" \
               --output text >> backend_url.txt
               curl -H "Content-Type: text/plain" -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request PUT --data $(cat backend_url.txt) https://api.memstash.io/values/backend
               curl -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/inventory.txt
@@ -227,6 +228,11 @@ jobs:
            pip install --upgrade pip
            pip install awscli
            apk add ansible
+      - run:
+          name: Cat inventory
+          command: |
+            cd .circle/ansible/
+            cat inventory.txt
       - run:
           name: Configure server
           command: |
@@ -369,18 +375,18 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
       # - scan-backend:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend,]
+          # requires: [test-frontend, test-backend,]
           filters:
             branches:
               only: [master]
