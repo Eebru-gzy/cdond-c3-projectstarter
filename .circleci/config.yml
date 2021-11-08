@@ -257,11 +257,7 @@ jobs:
             rm -f package-lock.json
             rm -rf node_modules
             npm install
-      - run: 
-          name: Run Migration
-          command: |
-            cd backend
-            npm run migrations >> db_success.txt      
+            npm run migrations >> db_success.txt 
       - run:
           name: Send migration results to memstash
           command: |
