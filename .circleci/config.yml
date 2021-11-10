@@ -274,7 +274,7 @@ jobs:
           name: Send migration results to memstash
           command: |
             cd backend
-            export VAL = cat migrations_dump | grep "has been executed successfully"
+            export VAL=cat migrations_dump | grep "has been executed successfully"
             echo $VAL
             if (( echo $VAL=="has been executed successfully" ))  
             then
