@@ -248,7 +248,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Run migrations
+          name: Prepare Run migrations
           command: |
             echo ENVIRONMENT=production > "backend/.env"
             echo NODE_ENV=production >> "backend/.env"
@@ -265,6 +265,11 @@ jobs:
             cd backend
             npm install
             npm run build
+      - run:
+          name: RUN MIGRATION
+          command: |
+            cd backend
+            ls -l
             npm run migrations > migrations_dump.log
       - run:
           name: Send migration results to memstash
@@ -407,8 +412,8 @@ workflows:
       #     requires: [deploy-infrastructure]
       - run-migrations
           # requires: [scan-frontend, scan-backend]
-      - deploy-frontend:
-          requires: [run-migrations]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
