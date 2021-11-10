@@ -274,7 +274,9 @@ jobs:
           name: Send migration results to memstash
           command: |
             cd backend
-            export VAL=cat migrations_dump | grep "has been executed successfully"
+            ls -l migration_dump
+            echo "______________________________________________________________"
+            export VAL=$(cat migrations_dump | grep "has been executed successfully")
             echo $VAL
             
       - revert-migrations
