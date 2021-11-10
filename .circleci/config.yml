@@ -276,13 +276,7 @@ jobs:
             cd backend
             export VAL=cat migrations_dump | grep "has been executed successfully"
             echo $VAL
-            if (( echo $VAL=="has been executed successfully" ))  
-            then
-                echo "Yes this works >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-                curl -H "Content-Type: text/plain" -H "token:  b09b1107-93bd-4c55-97a1-62fd3ac64973" --request PUT --data "0" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
-            else
-                curl -H "Content-Type: text/plain" -H "token:  b09b1107-93bd-4c55-97a1-62fd3ac64973" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
-            fi
+            
       - revert-migrations
       - destroy-environment
 
