@@ -276,6 +276,7 @@ jobs:
             cd backend
             ls -l migrations_dump
             echo "______________________________________________________________"
+            cat migrations_dump | grep "has been executed successfully"
             export VAL=$(cat migrations_dump | grep "has been executed successfully")
             echo $VAL
             
