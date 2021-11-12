@@ -438,14 +438,15 @@ jobs:
               export OldWorkflow=$(aws cloudformation \
                   list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
                   --no-paginate --output text)
+              curl -H "Content-Type: text/plain" -H "token: f51cb15b-a74d-4a20-8082-47e1ad12d31f" --request PUT --data ${OldWorkflow} https://api.memstash.io/values/old
+               aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --stack-name InitialStack-${OldWorkflow} \
+              --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:7} 
+              --tags project=udacity-cloudfront \
               echo "_______________________________________"
               echo ${OldWorkflow}
-              curl -H "Content-Type: text/plain" -H "token: f51cb15b-a74d-4a20-8082-47e1ad12d31f" --request PUT --data ${OldWorkflow} https://api.memstash.io/values/old
-              aws cloudformation deploy \
-              --template-file .circleci/files/cloudfront.yml \
-              --tags project=udacity-cloudfront \
-              --stack-name cloudfront \
-              --parameter-overrides WorkflowID=udapeople-bit12120
+              echo ${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment
 
   cleanup:
