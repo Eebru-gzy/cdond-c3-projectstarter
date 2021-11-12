@@ -398,17 +398,6 @@ jobs:
             pip install awscli
 
       - run:
-          name: FE smoke test.
-          command: |
-            URL="http://udapeople-bit1212.s3-website-us-east-1.amazonaws.com"
-            if curl -s ${URL} | grep "Welcome"
-            then
-            return 0
-            else
-            return 1
-            fi
-
-      - run:
           name: BE Smoke Test
           command: |
             BACKEND=$(curl -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request GET https://api.memstash.io/values/backendurl)
@@ -418,7 +407,19 @@ jobs:
             else
             return 1
             fi
+
+      - run:
+          name: FE smoke test.
+          command: |
+            URL="http://udapeople-bit1212.s3-website-us-east-1.amazonaws.com"
+            if curl -s ${URL} | grep "Welcome"
+            then
+            return 0
+            else
+            return 1
+            fi
       - destroy-environment
+      - revert-migrations
 
 #   cloudfront-update:
 #     docker:
