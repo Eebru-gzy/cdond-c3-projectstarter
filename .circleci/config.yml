@@ -277,7 +277,7 @@ jobs:
             ls -l migrations_dump
             echo "______________________________________________________________"
             # cat migrations_dump | grep "has been executed successfully" > file.txt
-            cat migration_dump
+            cat migrations_dump
             
             
       - revert-migrations
