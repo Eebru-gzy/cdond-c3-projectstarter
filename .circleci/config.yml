@@ -276,8 +276,8 @@ jobs:
             cd backend
             ls -l migrations_dump
             echo "______________________________________________________________"
-            cat migrations_dump | grep "has been executed successfully" > file.txt
-            cat file.txt
+            # cat migrations_dump | grep "has been executed successfully" > file.txt
+            cat migration_dump
             
             
       - revert-migrations
