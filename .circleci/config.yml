@@ -265,17 +265,16 @@ jobs:
             cd backend
             npm install
             npm run build
+      - revert-migrations
       - run:
           name: Run Migration
           command: |
             cd backend
             npm run migrations > migrations_dump
-      - revert-migrations
       - run:
           name: Send migration results to memstash
           command: |
             cd backend
-            ls -l migrations_dump
             echo "______________________________________________________________"
             # cat migrations_dump | grep "has been executed successfully" > file.txt
             cat migrations_dump
