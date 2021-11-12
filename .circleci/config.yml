@@ -276,7 +276,7 @@ jobs:
           name: Send migration results to memstash
           command: |
             cd backend
-            cat migrations_dump | grep grep "has been executed successfully" > file.txt
+            cat migrations_dump | grep "has been executed successfully" > file.txt
             cat file.txt
             if (( cat file.txt == "Migration AddEmployee1555722583168 has been executed successfully." ))  
             then
