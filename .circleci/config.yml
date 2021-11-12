@@ -462,7 +462,7 @@ workflows:
               only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - run-migrations
+      - run-migrations:
           requires: [scan-frontend, scan-backend]
       - deploy-frontend:
           requires: [run-migrations]
