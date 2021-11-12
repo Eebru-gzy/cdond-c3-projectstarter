@@ -276,7 +276,7 @@ jobs:
           command: |
             cd backend
             echo "______________________________________________________________"
-            # cat migrations_dump | grep "has been executed successfully" > file.txt
+            cat migrations_dump | grep "has been executed successfully" > file.txt
             cat file.txt
             
             
