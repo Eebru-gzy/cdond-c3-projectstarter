@@ -275,6 +275,7 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
+            cd backend
             cat migrations_dump
             #cd backend
             #cat migrations_dump | grep "has been executed successfully" > file.txt
@@ -465,9 +466,9 @@ workflows:
       - run-migrations:
           requires: [scan-frontend, scan-backend]
       - deploy-frontend:
-          requires: [run-migrations]
+          requires: [run-migrations, configure-infrastructure]
       - deploy-backend:
-          requires: [run-migrations]
+          requires: [run-migrations, configure-infrastructure]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
