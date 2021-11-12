@@ -408,8 +408,8 @@ jobs:
             return 1
             fi
 
-      - run:
-          name: FE smoke test.
+      # - run:
+      #     name: FE smoke test.
           #command: |
             #URL="http://udapeople-bit1212.s3-website-us-east-1.amazonaws.com"
             #if curl -s ${URL} | grep "Welcome"
