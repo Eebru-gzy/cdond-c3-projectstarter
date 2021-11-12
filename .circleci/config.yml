@@ -40,13 +40,13 @@ commands:
           # Add when this will run
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS=$(curl -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request GET https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID})
-            if(( $SUCCESS==1 )); 
-            then
+            #SUCCESS=$(curl -H "token: b09b1107-93bd-4c55-97a1-62fd3ac64973" --request GET https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID})
+            #if(( $SUCCESS==1 )); 
+            #then
               cd ~/project/backend
               npm install
               npm run migrations:revert
-            fi
+            #fi
 
 jobs:
   build-frontend:
@@ -270,6 +270,7 @@ jobs:
           command: |
             cd backend
             npm run migrations > migrations_dump
+      - revert-migrations
       - run:
           name: Send migration results to memstash
           command: |
@@ -280,7 +281,6 @@ jobs:
             cat migrations_dump
             
             
-      - revert-migrations
       - destroy-environment
 
 # if (( echo $VAL=="has been executed successfully" ))  
