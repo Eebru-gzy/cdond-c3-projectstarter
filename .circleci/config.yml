@@ -239,11 +239,11 @@ jobs:
           command: |
             cd .circleci/ansible/
             ansible-playbook configure-server.yml -i inventory.txt
-      - run:
-          name: Node Exporter Config
-          command: |
-            cd .circleci/ansible/roles/configure-prometheus-node-exporter/tasks
-            ansible-playbook main.yml -i ../../../../inventory.txt
+      # - run:
+      #     name: Node Exporter Config
+      #     command: |
+      #       cd .circleci/ansible/roles/configure-prometheus-node-exporter/tasks
+      #       ansible-playbook main.yml -i ../../../../inventory.txt
       - destroy-environment
 
   run-migrations:
@@ -322,7 +322,7 @@ jobs:
               npx browserslist@latest --update-db
               npm install
               npm run build
-              aws s3 cp ./dist/ s3://udapeople-bit1212/ --recursive 
+              aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive 
       - destroy-environment:
           to: "FE"
 
@@ -413,16 +413,17 @@ jobs:
             return 1
             fi
 
-      # - run:
-      #     name: FE smoke test.
-          #command: |
-            #URL="http://udapeople-bit1212.s3-website-us-east-1.amazonaws.com"
-            #if curl -s ${URL} | grep "Welcome"
-            #then
-            #return 0
-            #else
-            #return 1
-            #fi
+      - run:
+          name: FE smoke test.
+          command: |
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com"
+            curl -s ${URL}
+            if curl -s ${URL} | grep "Welcome"
+            then
+            return 0
+            else
+            return 1
+            fi
       - destroy-environment
       - revert-migrations
 
@@ -492,15 +493,15 @@ workflows:
               only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [scan-frontend, scan-backend]
+      # - run-migrations:
+      #     requires: [scan-frontend, scan-backend]
       - deploy-frontend:
           requires: [run-migrations, configure-infrastructure]
       - deploy-backend:
           requires: [run-migrations, configure-infrastructure]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      # - cleanup:
+      #     requires: [cloudfront-update]

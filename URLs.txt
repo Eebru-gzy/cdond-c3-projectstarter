@@ -1,2 +1,2 @@
-[URL-1] Github repo URL: https://github.com/Eebru-gzy/cdond-c3-projectstarter
-[URL-2] FE deployment: https://s3.console.aws.amazon.com/s3/buckets/udapeople-bit1212?region=us-west-2
+ [URL01]: https://github.com/Eebru-gzy/cdond-c3-projectstarter
+ [URL02]: 
